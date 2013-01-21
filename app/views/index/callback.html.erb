@@ -1,6 +1,6 @@
 <h1>Pocket</h1>
 <pre>
-<% @body["list"].each do |k,v| %>
- <%= "#{k} => #{v}" %>
+<% @links.each do |link| %>
+  <a href="<%= link.url %>"><%= link.title %></a>
 <% end %>
 </pre>

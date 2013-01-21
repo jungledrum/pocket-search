@@ -1,0 +1,9 @@
+<h1>Pocket</h1>
+<a href="links/crawl">Crawl</a>
+<ul>
+<% @links.each do |link| %>
+  <li>
+  <a href="<%= link_path(link.id)%>"><%= link.title %></a>
+  </li>
+<% end %>
+</ul>

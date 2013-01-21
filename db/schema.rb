@@ -11,6 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20130121021044) do
+
+  create_table "links", :force => true do |t|
+    t.integer  "pocket_id"
+    t.string   "url"
+    t.string   "title"
+    t.text     "content"
+    t.string   "type"
+    t.string   "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end

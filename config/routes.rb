@@ -2,6 +2,12 @@ PocketSearch::Application.routes.draw do
   get "index/index"
   get "index/callback"
 
+  resources :links do
+    collection do
+      get 'crawl'
+    end
+  end
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
