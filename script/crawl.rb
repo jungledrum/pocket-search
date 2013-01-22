@@ -20,13 +20,13 @@ end
 def crawl(link)
   begin
     source = open(link.url).read
-    @bodys[link.id] = Readability::Document.new(source).content
+    @bodys[link.id] = {"content"=>Readability::Document.new(source).content, "crawl_status"=>200}
   rescue => detail
-    p "#{link.url} error!!!"
+    @bodys[link.id] = {"crawl_status"=>404}
   end
 end
 
-links = Link.all
+links = Link.where("crawl_status is NULL")
 links = links[0,links.size]
 threads = []
 links.each_with_index do |x, index|
@@ -42,5 +42,6 @@ threads.each do |x|
 end
 
 links.each_with_index do |link, index|
-  link.update_attribute("content", @bodys[link.id])
+  #link.update_attributes("content"=>@bodys[link.id]["content"], "crawl_status"=>404)
+  p link.update_attributes("crawl_status"=>"404")
 end
