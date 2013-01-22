@@ -1,2 +1,24 @@
-<h1>Index#index</h1>
-<p>Find me in app/views/index/index.html.erb</p>
+<h1>Pocket</h1>
+<% if session[:uid] %>
+Hi,<%= @user.username %>
+<a href="<%= logout_path %>">退出</a>
+<a href="<%= crawl_links_path %>">Crawl</a>
+<a href="<%= index_sync_path %>">同步</a>
+
+<form action="links/search" method="post">
+  <input type="text" name="key"/>
+  <input type="submit" />
+</form>
+<ul>
+<% @links.each do |link| %>
+  <li style="width:400px">
+  <a href="<%= link.url %>" target="_blank"><%= link.title %></a>|
+  <a href="<%= link_path(link.id)%>" target="_blank">文字</a>
+  </li>
+<% end %>
+</ul>
+
+<% else %>
+  <a href="<%= login_path %>">登录</a>
+<% end %>
+

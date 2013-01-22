@@ -1,6 +1,9 @@
 PocketSearch::Application.routes.draw do
   get "index/index"
   get "index/callback"
+  get "index/sync"
+  get "login" => "index#login"
+  get "logout" => "index#logout"
 
   resources :links do
     collection do

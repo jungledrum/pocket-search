@@ -6,19 +6,19 @@ class LinksController < ApplicationController
   end
 
   def crawl
-    links = Link.all
+    links = Link.where("uid = #{session[:uid]}")
     
     links.each_with_index do |x, index|
       begin
         body = open(x.url).read
         x.update_attribute("content", body)
       rescue
-        p "#{index} of #{links.size} error!"
+        p "#{link.url} of #{links.size} error!"
       end
       p "#{index} of #{links.size}"
     end
 
-    render :text=>"crawl......"
+    redirect_to root_path
   end
 
   def show

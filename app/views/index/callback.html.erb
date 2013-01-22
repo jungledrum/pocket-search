@@ -1,6 +1,10 @@
 <h1>Pocket</h1>
-<pre>
+Hi,<%= @user.first.username %>
+
+<ul>
 <% @links.each do |link| %>
+  <li>
   <a href="<%= link.url %>"><%= link.title %></a>
+  </li>
 <% end %>
-</pre>
+</ul>
