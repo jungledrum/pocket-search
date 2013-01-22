@@ -1,5 +1,6 @@
 require 'active_record'
 require 'open-uri'
+require 'readability'
 gem 'mysql2'
 
 ActiveRecord::Base.establish_connection(
@@ -14,21 +15,19 @@ class Link < ActiveRecord::Base
   attr_accessible :content, :id, :pocket_id, :status, :title, :type, :url
 end
 
-@bodys = []
+@bodys = Hash.new
 
 def crawl(link)
   begin
-    body = open(link.url).read
-    @bodys << body
-    #link.update_attribute("content", body)
+    source = open(link.url).read
+    @bodys[link.id] = Readability::Document.new(source).content
   rescue => detail
     p "#{link.url} error!!!"
-    #print detail.backtrace.join("\n")
   end
 end
 
 links = Link.all
-links = links[174,links.size]
+links = links[0,links.size]
 threads = []
 links.each_with_index do |x, index|
   begin
@@ -43,5 +42,5 @@ threads.each do |x|
 end
 
 links.each_with_index do |link, index|
-  link.update_attribute("content", @bodys[index])
+  link.update_attribute("content", @bodys[link.id])
 end

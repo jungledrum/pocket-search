@@ -1,0 +1,8 @@
+<ul>
+  <% @links.each do |link| %>
+    <li style="width:400px">
+    <a href="<%= link.url %>"><%= link.title %></a>|
+    <a href="<%= link_path(link.id)%>">文字</a>
+    </li>
+  <% end %>
+</ul>

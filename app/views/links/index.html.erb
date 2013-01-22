@@ -1,9 +1,14 @@
 <h1>Pocket</h1>
 <a href="links/crawl">Crawl</a>
+<form action="links/search" method="post">
+  <input type="text" name="key"/>
+  <input type="submit" />
+</form>
 <ul>
 <% @links.each do |link| %>
-  <li>
-  <a href="<%= link_path(link.id)%>"><%= link.title %></a>
+  <li style="width:400px">
+  <a href="<%= link.url %>" target="_blank"><%= link.title %></a>|
+  <a href="<%= link_path(link.id)%>" target="_blank">文字</a>
   </li>
 <% end %>
 </ul>

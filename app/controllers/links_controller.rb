@@ -24,4 +24,19 @@ class LinksController < ApplicationController
   def show
     @link = Link.find(params[:id])
   end
+
+  def search
+    keys = params[:key].split
+    sql = ""
+    keys.each_with_index do |x, index|
+      if index == 0
+        sql += "(content like '%#{x}%' or title like '%#{x}%')"
+      else
+        sql += "and (content like '%#{x}%' or title like '%#{x}%')"
+      end
+    end
+    p "="*100
+    p sql
+    @links = Link.where(sql)
+  end
 end

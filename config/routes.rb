@@ -5,6 +5,7 @@ PocketSearch::Application.routes.draw do
   resources :links do
     collection do
       get 'crawl'
+      post 'search'
     end
   end
 
