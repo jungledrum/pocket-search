@@ -32,11 +32,12 @@ class LinksController < ApplicationController
       if index == 0
         sql += "(content like '%#{x}%' or title like '%#{x}%')"
       else
-        sql += "and (content like '%#{x}%' or title like '%#{x}%')"
+        sql += " and (content like '%#{x}%' or title like '%#{x}%')"
       end
     end
     p "="*100
-    p sql
+    p session
+    sql += " and uid = #{session[:uid]}"
     @links = Link.where(sql)
   end
 end

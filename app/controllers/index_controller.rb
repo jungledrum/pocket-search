@@ -79,9 +79,16 @@ class IndexController < ApplicationController
       pocket_id = v["item_id"]
       url = v["given_url"]
       title = v["given_title"]
-      Link.create(:pocket_id => pocket_id, :url => url, :title => title, :uid => user.id)
+      content_type = get_content_type(url)
+      Link.create(:pocket_id => pocket_id, :url => url, :title => title, :uid => user.id, :content_type => content_type)
     end
 
     redirect_to root_path
+  end
+
+  def get_content_type(url)
+    if url.match('^.+://[^/]+/?$')
+      return "site"
+    end
   end
 end

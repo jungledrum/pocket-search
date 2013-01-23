@@ -12,7 +12,7 @@ ActiveRecord::Base.establish_connection(
 )
 
 class Link < ActiveRecord::Base
-  attr_accessible :content, :id, :pocket_id, :status, :title, :type, :url
+  attr_accessible :content, :id, :pocket_id, :status, :title, :type, :url, :crawl_status, :uid
 end
 
 @bodys = Hash.new
@@ -42,6 +42,5 @@ threads.each do |x|
 end
 
 links.each_with_index do |link, index|
-  #link.update_attributes("content"=>@bodys[link.id]["content"], "crawl_status"=>404)
-  p link.update_attributes("crawl_status"=>"404")
+  link.update_attributes("content"=>@bodys[link.id]["content"], "crawl_status"=>@bodys[link.id]["crawl_status"])
 end
