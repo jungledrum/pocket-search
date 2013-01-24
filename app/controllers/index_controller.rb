@@ -70,17 +70,23 @@ class IndexController < ApplicationController
     res = http.get("/v3/get?detailType=simple&consumer_key=11572-e9f22c44fc2b2cf25f14a560&access_token=#{user.pocket_access_token}")
     body = JSON.parse(res.body)
 
-    links = Link.where("uid = #{user.id}")
-    links.each do |x|
-      x.destroy 
-    end
+    #links = Link.where("uid = #{user.id}")
+    #links.each do |x|
+    #  x.destroy 
+    #end
     
     body["list"].each do |k, v|
       pocket_id = v["item_id"]
       url = v["given_url"]
       title = v["given_title"]
       content_type = get_content_type(url)
-      Link.create(:pocket_id => pocket_id, :url => url, :title => title, :uid => user.id, :content_type => content_type)
+
+      has_link = Link.where("url = '#{url}' and uid = #{user.id}")
+      p "="*80
+      p has_link
+      if has_link.blank?
+        Link.create(:pocket_id => pocket_id, :url => url, :title => title, :uid => user.id, :content_type => content_type)
+      end
     end
 
     redirect_to root_path

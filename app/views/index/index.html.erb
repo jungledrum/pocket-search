@@ -11,9 +11,16 @@ Hi,<%= @user.username %>
 <% end %>
 <ul>
 <% @links.each do |link| %>
-  <li style="width:400px">
+  <li>
   <a href="<%= link.url %>" target="_blank"><%= link.title %></a>|
-  <a href="<%= link_path(link.id)%>" target="_blank"><%= link.content_type %></a>
+  <% if link.content_type == "site" %>
+    <%= link.content_type %>
+  <% else %>
+    <a href="<%= link_path(link.id)%>" target="_blank">阅读</a>
+  <% end %>
+  <% unless link.crawl_status == 200 %>
+    <%= link.crawl_status %>
+  <% end %>
   </li>
 <% end %>
 </ul>

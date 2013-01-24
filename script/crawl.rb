@@ -1,4 +1,5 @@
 require 'active_record'
+require 'net/http'
 require 'open-uri'
 require 'readability'
 gem 'mysql2'
@@ -19,9 +20,19 @@ end
 
 def crawl(link)
   begin
-    source = open(link.url).read
-    @bodys[link.id] = {"content"=>Readability::Document.new(source).content, "crawl_status"=>200}
+    uri = URI(link.url)
+    http = Net::HTTP.new(uri.host, uri.port)
+    if uri.scheme == "https"
+      http.use_ssl = true
+    end
+    res = http.get(uri.request_uri, {'User-Agent' => 'Chrome'})
+    source = res.body
+    p res.code
+    @bodys[link.id] = {"content"=>Readability::Document.new(source).content, "crawl_status"=>res.code}
   rescue => detail
+    p "-"*10
+    p link.url
+    p detail
     @bodys[link.id] = {"crawl_status"=>404}
   end
 end
