@@ -67,7 +67,7 @@ class IndexController < ApplicationController
     parsed_url = URI.parse("https://getpocket.com")
     http = Net::HTTP.new(parsed_url.host, parsed_url.port)
     http.use_ssl = true
-    res = http.get("/v3/get?detailType=simple&consumer_key=11572-e9f22c44fc2b2cf25f14a560&access_token=#{user.pocket_access_token}")
+    res = http.get("/v3/get?state=all&consumer_key=11572-e9f22c44fc2b2cf25f14a560&access_token=#{user.pocket_access_token}")
     body = JSON.parse(res.body)
 
     #links = Link.where("uid = #{user.id}")
@@ -82,8 +82,6 @@ class IndexController < ApplicationController
       content_type = get_content_type(url)
 
       has_link = Link.where("url = '#{url}' and uid = #{user.id}")
-      p "="*80
-      p has_link
       if has_link.blank?
         Link.create(:pocket_id => pocket_id, :url => url, :title => title, :uid => user.id, :content_type => content_type)
       end

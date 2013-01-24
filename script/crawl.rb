@@ -18,7 +18,7 @@ end
 
 @bodys = Hash.new
 
-def crawl(link)
+def crawl(link, links)
   begin
     uri = URI(link.url)
     http = Net::HTTP.new(uri.host, uri.port)
@@ -27,8 +27,8 @@ def crawl(link)
     end
     res = http.get(uri.request_uri, {'User-Agent' => 'Chrome'})
     source = res.body
-    p res.code
     @bodys[link.id] = {"content"=>Readability::Document.new(source).content, "crawl_status"=>res.code}
+    p links.size
   rescue => detail
     p "-"*10
     p link.url
@@ -38,16 +38,26 @@ def crawl(link)
 end
 
 links = Link.where("crawl_status is NULL")
-links = links[0,links.size]
+p links.size
+links = links[0,30]
 threads = []
-links.each_with_index do |x, index|
+
+5.times do
   begin
-    threads << Thread.new{crawl(x)}
+    threads << Thread.new do
+      until links.blank?
+        link = links.pop
+        crawl(link, links)
+      end
+      Thread.current.exit 
+    end
   rescue => detail
-    #print detail.backtrace.join("\n")
+    p detail
+    # print detail.backtrace.join("\n")
   end
-  p "#{index} of #{links.size}"
 end
+
+p threads
 threads.each do |x|
   x.join
 end
