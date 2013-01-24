@@ -12,6 +12,13 @@ PocketSearch::Application.routes.draw do
     end
   end
 
+  resources :users do
+    collection do
+      get 'unfollow'
+      get 'follow'
+    end
+  end
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

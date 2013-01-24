@@ -2,7 +2,7 @@
 <% if session[:uid] %>
 Hi,<%= @user.username %>
 <a href="<%= logout_path %>">退出</a>
-<a href="<%= crawl_links_path %>">Crawl</a>
+<a href="<%= users_path %>">users</a>
 <a href="<%= index_sync_path %>">同步</a>
 
 <%= form_tag(search_links_path, :method=>"post") do %>
