@@ -11,10 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130124071512) do
+ActiveRecord::Schema.define(:version => 20130128054200) do
+
+  create_table "items", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "link_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "links", :force => true do |t|
-    t.integer  "pocket_id"
     t.string   "url"
     t.string   "title"
     t.text     "content"

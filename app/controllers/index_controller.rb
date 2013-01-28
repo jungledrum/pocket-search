@@ -4,11 +4,19 @@ require 'json'
 class IndexController < ApplicationController
 
   def index
-    p "="*100
-    p session
     if session[:uid]
-      @links = Link.where("uid = #{session[:uid]}")
       @user = User.find(session[:uid])
+
+      @items = Hash.new
+      last_date = ""
+      @user.items.each do |x|
+        cur_date = x.created_at.to_s[0,10]
+        unless last_date == cur_date
+          last_date = cur_date 
+          @items[cur_date] = Array.new
+        end
+        @items[cur_date] << x
+      end
     end
   end
 
@@ -70,20 +78,26 @@ class IndexController < ApplicationController
     res = http.get("/v3/get?state=all&consumer_key=11572-e9f22c44fc2b2cf25f14a560&access_token=#{user.pocket_access_token}")
     body = JSON.parse(res.body)
 
-    #links = Link.where("uid = #{user.id}")
-    #links.each do |x|
-    #  x.destroy 
-    #end
-    
     body["list"].each do |k, v|
       pocket_id = v["item_id"]
       url = v["given_url"]
       title = v["given_title"]
+      time_added = v["time_added"]
       content_type = get_content_type(url)
 
-      has_link = Link.where("url = '#{url}' and uid = #{user.id}")
-      if has_link.blank?
-        Link.create(:pocket_id => pocket_id, :url => url, :title => title, :uid => user.id, :content_type => content_type)
+      link = Link.where("url = '#{url}'").first
+      if link.blank?
+        link = Link.create(:url => url, :title => title, :content_type => content_type)
+      end
+
+      has_link = false
+      user.items.each do |x|
+        if x.id == link.id
+          has_link = true
+        end
+      end
+      unless has_link
+        Item.create(:user_id => user.id, :link_id => link.id, :created_at => Time.at(time_added.to_i))
       end
     end
 

@@ -10,7 +10,10 @@ Hi,<%= @user.username %>
   <input type="submit" />
 <% end %>
 <ul>
-<% @links.each do |link| %>
+<% @items.each do |k, v| %>
+  <%= k %>
+  <% v.each do |x| %>
+  <% link = x.link %>
   <li>
   <a href="<%= link.url %>" target="_blank"><%= link.title %></a>|
   <% if link.content_type == "site" %>
@@ -22,6 +25,7 @@ Hi,<%= @user.username %>
     <%= link.crawl_status %>
   <% end %>
   </li>
+  <% end %>
 <% end %>
 </ul>
 

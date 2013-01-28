@@ -15,8 +15,8 @@ development:
   database: pocket-search_development
   pool: 5
   username: root
-  password: '123456'
-  # password:
+  #password: '123456'
+  password:
   host: localhost
 
 # Warning: The database defined as "test" will be erased and
@@ -29,8 +29,8 @@ test:
   database: pocket-search_test
   pool: 5
   username: root
-  password: '123456'
-  # password:
+  #password: '123456'
+  password:
   host: localhost
 
 production:
@@ -40,6 +40,6 @@ production:
   database: pocket-search_production
   pool: 5
   username: root
-  password: '123456'
-  # password:
+  #password: '123456'
+  password:
   host: localhost

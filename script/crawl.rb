@@ -8,7 +8,7 @@ ActiveRecord::Base.establish_connection(
   :adapter  => "mysql2",
   :host     => "localhost",
   :username => "root",
-  :password => "123456",
+  :password => "",
   :database => "pocket-search_development"
 )
 
@@ -39,7 +39,7 @@ def crawl(link)
   # l.update_attributes("content"=>@bodys[link.id]["content"], "crawl_status"=>@bodys[link.id]["crawl_status"])
 end
 
-links = Link.where("crawl_status = 200").order("id DESC")
+links = Link.where("crawl_status is NULL").order("id DESC")
 links = links[0,links.size]
 p links.size
 threads = []
@@ -74,7 +74,7 @@ end_time = Time.now
 p "consume_time:#{end_time - start_time}, worker:#{thread_num}, links_size:#{links_size}"
 
 p "=======END========="
-# @bodys.each do |k, v|
-#   link = Link.find(k)
-#   link.update_attributes("content"=>v["content"], "crawl_status"=>v["crawl_status"])
-# end
+@bodys.each do |k, v|
+  link = Link.find(k)
+  link.update_attributes("content"=>v["content"], "crawl_status"=>v["crawl_status"])
+end
