@@ -1,4 +1,3 @@
-<h1>Pocket</h1>
 <% if session[:uid] %>
 Hi,<%= @user.username %>
 <a href="<%= logout_path %>">退出</a>
@@ -11,7 +10,7 @@ Hi,<%= @user.username %>
 <% end %>
 <ul>
 <% @items.each do |k, v| %>
-  <%= k %>
+  <div class="date"><%= k %></div>
   <% v.each do |x| %>
   <% link = x.link %>
   <li>

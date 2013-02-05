@@ -92,7 +92,7 @@ class IndexController < ApplicationController
 
       has_link = false
       user.items.each do |x|
-        if x.id == link.id
+        if x.link_id == link.id
           has_link = true
         end
       end

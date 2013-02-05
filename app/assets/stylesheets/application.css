@@ -11,4 +11,19 @@
  *= require_self
  *= require_tree .
  */
-li {line-height: 1.5em}
+li {
+	line-height: 1.5em;
+	list-style: none;
+	width: 600px;
+	margin: 10px 0;
+}
+
+a { text-decoration: none;}
+
+.date {
+	background-color: grey;
+	color: white;
+	padding: 5px 0;
+	/*margin-top: 10px;*/
+	/*border-bottom: solid 20px grey;*/
+}

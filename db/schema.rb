@@ -32,6 +32,19 @@ ActiveRecord::Schema.define(:version => 20130128054200) do
     t.integer  "crawl_status"
   end
 
+  add_index "links", ["title", "content"], :name => "index2"
+
+  create_table "lists", :force => true do |t|
+    t.string   "title",      :limit => 45
+    t.string   "user_id",    :limit => 45
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "lists_links", :primary_key => "list_id", :force => true do |t|
+    t.integer "link_id"
+  end
+
   create_table "users", :force => true do |t|
     t.string   "pocket_access_token"
     t.string   "username"
