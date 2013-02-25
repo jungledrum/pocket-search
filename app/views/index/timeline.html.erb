@@ -1,13 +1,17 @@
+<div class="row tabs">
+  <div class="span3 offset7">
+	<a href="" class="button">Day</a>
+  <a href="" class="button">Week</a>
+  <a href="" class="button">Month</a>
+  </div>
+</div>
 
 <div class="row">
-  <div class="span8 offset2">
-    <!--Sidebar content-->
-
-    <% @items.each do |k, v| %>
-    <div class="row date"><%= k %></div>
-    <% v.each do |x| %>
-    <% link = x.link %>
+  <div class="span9 offset1">
+    <% @items.each do |item| %>
+    <% link = Link.find(item.link_id) %>
     <div class="row item">
+      <span class="span1"><%= item.link_num %></span>
       <a href="<%= link.url %>" target="_blank" class="title span6" title="<%= link.title %>"><%= link.title %></a>
       <% if link.content_type == "site" %>
       <%= link.content_type %>
@@ -19,11 +23,6 @@
       <% end %>
     </div>
     <% end %>
-    <% end %>
   </div>
+
 </div>
-
-
-
-
-

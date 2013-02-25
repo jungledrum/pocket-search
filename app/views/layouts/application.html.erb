@@ -1,14 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>PocketSearch</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+	<title>PocketSearch</title>
+	<%= stylesheet_link_tag    "application", :media => "all" %>
+	<%= javascript_include_tag "application" %>
+	<%= csrf_meta_tags %>
 </head>
 <body>
 
-<%= yield %>
+
+<div class="navbar">
+	<div class="row">
+
+  
+  	<%= unless(@user.blank?) then @user.username end %>
+  	<a href="<%= logout_path %>">退出</a>
+  <a href="<%= root_path %>">我的书签</a>
+  <a href="<%= index_timeline_path %>">时间线</a>
+  <a href="<%= users_path %>">用户</a>
+  <a href="<%= index_sync_path %>">同步</a>
+  
+
+  <%= form_tag(search_links_path, :method=>"post") do %>
+  <input type="text" name="key" placeholder="search"/>
+  <% end %>
+  </div>
+</div>
+	<div class="container">
+		
+		<%= yield %>
+	</div>
+
 
 </body>
 </html>

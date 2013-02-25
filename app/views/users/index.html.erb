@@ -1,17 +1,24 @@
-<%= @cur_user.username %>关注了<%= @cur_user.follows.size %>位用户:
-<ul>
+<div class="row tabs">
+  <div class="span8 offset2">
+  <%= @user.username %>关注了<%= @user.follows.size %>位用户:
+  </div>
+</div>
+
+<div class="row item">
+  <div class="span8 offset2">
   <% @users.each do |user| %>  
-  <% unless user.id == @cur_user.id %>
-  <li>
-  	<%= user.username %> 
-  	关注:<%= user.follows.size %> 
-  	粉丝: <%= user.fans.size %>
-  	<% if has_follow(@cur_user, user) %>
-  	<%= link_to("取消关注", unfollow_users_path(:follow_id => user.id)) %>
+  <% unless user.id == @user.id %>
+  <div class="row">
+  	<span class="span2"><%= user.username %></span>
+  	<span class="span1">关注:<%= user.follows.size %></span>
+  	<span class="span1">粉丝: <%= user.fans.size %></span>
+  	<% if has_follow(@user, user) %>
+  	<span class="span1"><%= link_to("取消关注", unfollow_users_path(:follow_id => user.id)) %></span>
   	<% else %>
-  	<%= link_to("关注", follow_users_path(:follow_id => user.id)) %>
+  	<span class="span1"><%= link_to("关注", follow_users_path(:follow_id => user.id)) %></span>
   	<% end %>
-  </li>
+  </div>
   <% end %>
   <% end %>
-</ul>
+  </div>
+</div>

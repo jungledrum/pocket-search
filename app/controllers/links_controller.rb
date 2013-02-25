@@ -15,7 +15,7 @@ class LinksController < ApplicationController
     end
     p "="*80
     p sql
-    user = User.find(session[:uid])
+    @user = User.find(session[:uid])
     @links = Link.joins(sql)
     # @links = Link.where(sql)
   end

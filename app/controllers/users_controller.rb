@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   def index
     @users = User.all
-    @cur_user = User.find(session[:uid])
+    @user = User.find(session[:uid])
   end
 
   def unfollow

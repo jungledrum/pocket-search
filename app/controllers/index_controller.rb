@@ -9,6 +9,9 @@ class IndexController < ApplicationController
 
       @items = Hash.new
       last_date = ""
+      @user.items.sort! do |x, y|
+        y.created_at <=> x.created_at
+      end
       @user.items.each do |x|
         cur_date = x.created_at.to_s[0,10]
         unless last_date == cur_date
@@ -17,6 +20,9 @@ class IndexController < ApplicationController
         end
         @items[cur_date] << x
       end
+      render :index
+    else
+      render :login, :layout => false
     end
   end
 
@@ -107,6 +113,18 @@ class IndexController < ApplicationController
   def get_content_type(url)
     if url.match('^.+://[^/]+/?$')
       return "site"
+    end
+  end
+
+  def timeline
+    @user = User.find(session[:uid])
+    @follows = @user.follows
+
+    @items = Item.select("link_id, count(link_id) as link_num")
+                      .where("user_id in (?,?)", @user, @follows)
+                      .group("link_id")
+    @items.sort! do |x, y|
+      y.link_num <=> x.link_num
     end
   end
 end
