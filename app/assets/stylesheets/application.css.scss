@@ -61,12 +61,17 @@
 
  .date{
  	line-height: 2.0;
- 	// background-color: lighten($black, 10%);
- 	// color: $white;
+ 	background-color: lighten($black, 10%);
+ 	color: $white;
+  margin: 10px 0;
  }
 
  .item{
  	line-height: 2.0;
+ }
+
+ .view_text{
+  text-align: right;
  }
 
  a{
@@ -84,7 +89,7 @@
 
  .navbar{
  	line-height: 3.0;
- 	border-bottom: dotted;
+ 	border-bottom: double;
  	margin-bottom: 20px;
  }
  .navbar .row{

@@ -8,14 +8,11 @@
     <% v.each do |x| %>
     <% link = x.link %>
     <div class="row item">
-      <a href="<%= link.url %>" target="_blank" class="title span6" title="<%= link.title %>"><%= link.title %></a>
+      <a href="<%= link.url %>" target="_blank" class="title span7" title="<%= link.title %>"><%= link.title %></a>
       <% if link.content_type == "site" %>
-      <%= link.content_type %>
+      <span class="span1 view_text">站点</span>
       <% else %>
       <a href="<%= link_path(link.id)%>" target="_blank" class="view_text span1">阅读</a>
-      <% end %>
-      <% unless link.crawl_status == 200 %>
-      <span class="status span1"><%= link.crawl_status %></span>
       <% end %>
     </div>
     <% end %>
