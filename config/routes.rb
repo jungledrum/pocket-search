@@ -20,6 +20,12 @@ PocketSearch::Application.routes.draw do
     end
   end
 
+  resources :items do
+    collection do
+      get 'main'
+    end
+  end
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

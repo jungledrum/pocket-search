@@ -4,6 +4,10 @@
 	<title>PocketSearch</title>
 	<%= stylesheet_link_tag    "application", :media => "all" %>
 	<%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "underscore" %>
+  <%= javascript_include_tag "backbone" %>
+  <%= javascript_include_tag "json2" %>
+  
 	<%= csrf_meta_tags %>
 </head>
 <body>
@@ -19,6 +23,7 @@
   <a href="<%= index_timeline_path %>">时间线</a>
   <a href="<%= users_path %>">用户</a>
   <a href="<%= index_sync_path %>">同步</a>
+  <a href="<%= main_items_path %>">Items</a>
   
 
   <%= form_tag(search_links_path, :method=>"post") do %>
